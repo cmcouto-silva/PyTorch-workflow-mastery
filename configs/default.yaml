@@ -1,0 +1,53 @@
+defaults:
+  seed: 42
+  num_classes: 10
+  model_path: weights/cifar10_model.pt
+  num_workers: 10
+
+data:
+  train_transform:
+    - ToTensor
+    - Normalize:
+        mean: [0.485, 0.456, 0.406]
+        std: [0.229, 0.224, 0.225]
+  val_transform:
+    - ToTensor
+    - Normalize:
+        mean: [0.485, 0.456, 0.406]
+        std: [0.229, 0.224, 0.225]
+
+model:
+  name: "ResNet18"
+
+training:  # Parameters for actual training
+  learning_rate: 0.001
+  batch_size: 128
+  optimizer: "Adam"
+  dropout_rate: 0.2
+  num_epochs: 10
+  save_best: true
+
+optuna:  # Parameters for optimization
+  n_trials: 10
+  n_startup_trials: 5
+  n_warmup_steps: 1
+  num_epochs: 3        # Shorter epochs for optimization runs (didactic purposes)
+  parameters:
+    learning_rate:
+      type: float
+      min: 0.0001
+      max: 0.1
+      log: true
+    batch_size:
+      type: categorical
+      choices: [64, 128, 256]
+    optimizer:
+      type: categorical
+      choices: ["Adam", "SGD"]
+    dropout_rate:
+      type: float
+      min: 0.1
+      max: 0.5
+
+wandb:
+  project: "pytorch-cifar10"

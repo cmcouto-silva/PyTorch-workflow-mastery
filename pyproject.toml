@@ -1,0 +1,49 @@
+[project]
+name = "pytorch-workflow-tutorial"
+description = "PyTorch Workflow Mastery: A Guide to Track and Optimize Model Performance"
+authors = [
+    {name = "Cainã Max Couto da Silva", email = "cmcouto.silva@gmail.com"}
+]
+version = "0.1.0"
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.12"
+dependencies = [
+    "ipykernel>=6.29.5",
+    "ipywidgets>=8.1.5",
+    "loguru>=0.7.2",
+    "matplotlib>=3.9.3",
+    "optuna>=4.1.0",
+    "pandas>=2.2.3",
+    "python-dotenv>=1.0.1",
+    "scikit-learn>=1.5.2",
+    "torch==2.5.1",
+    "torchmetrics>=1.6.0",
+    "torchvision==0.20.1",
+    "tqdm>=4.67.1",
+    "wandb>=0.18.7"
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.3",
+    "ruff>=0.8.0",
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu124"
+url = "https://download.pytorch.org/whl/cu124"
+explicit = true
+
+[tool.setuptools]
+packages = ["src"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+[tool.ruff.lint.isort]
+known-first-party = ["src"]
+force-sort-within-sections = true
